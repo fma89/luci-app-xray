@@ -301,6 +301,24 @@ local function shadowsocks_outbound(server, tag)
     }
 end
 
+local function shadowsocks_2022_outbound(server, tag)
+    return {
+        protocol = "shadowsocks_2022",
+        tag = tag,
+        settings = {
+            servers = {
+                {
+                    address = server.server,
+                    port = tonumber(server.server_port),
+                    key = server.password,
+                    method = server.shadowsocks_2022_security
+                }
+            }
+        },
+        streamSettings = stream_settings(server, "shadowsocks_2022", false)
+    }
+end
+
 local function vmess_outbound(server, tag)
     return {
         protocol = "vmess",
@@ -382,6 +400,9 @@ local function server_outbound(server, tag)
     end
     if server.protocol == "shadowsocks" then
         return shadowsocks_outbound(server, tag)
+    end
+    if server.protocol == "shadowsocks_2022" then
+        return shadowsocks_2022_outbound(server, tag)
     end
     if server.protocol == "trojan" then
         return trojan_outbound(server, tag)

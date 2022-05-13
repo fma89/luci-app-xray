@@ -208,6 +208,7 @@ return view.extend({
         o.value("vless", "VLESS")
         o.value("trojan", "Trojan")
         o.value("shadowsocks", "Shadowsocks")
+        o.value("shadowsocks_2022", "Shadowsocks 2022")
         o.rmempty = false
 
         add_flow_and_stream_security_conf(ss, "protocol", "protocol", "trojan", true, true)
@@ -222,6 +223,16 @@ return view.extend({
         o.modalonly = true
 
         add_flow_and_stream_security_conf(ss, "protocol", "protocol", "shadowsocks", false, true)
+
+        o = ss.taboption('protocol', form.ListValue, "shadowsocks_2022_security", _("[shadowsocks_2022] Encrypt Method"))
+        o.depends("protocol", "shadowsocks_2022")
+        o.value("2022-blake3-aes-128-gcm", "2022-blake3-aes-128-gcm")
+        o.value("2022-blake3-aes-256-gcm", "2022-blake3-aes-256-gcm")
+        o.value("2022-blake3-chacha20-poly1305", "2022-blake3-chacha20-poly1305")
+        o.rmempty = false
+        o.modalonly = true
+
+        add_flow_and_stream_security_conf(ss, "protocol", "protocol", "shadowsocks_2022", false, true)
 
         o = ss.taboption('protocol', form.ListValue, "vmess_security", _("[vmess] Encrypt Method"))
         o.depends("protocol", "vmess")
